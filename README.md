@@ -1,6 +1,10 @@
-# RCD_practica8.2
-Progracion de Sockets
+# RCD_practica9
 
+Redes de Comunicacion
+ - LABORATORIO
+    - Practica 9:
+      - Progracion de Sockets
+----------------------------
 Cómo compilar y ejecutar
 Para poder probar los programas, sigue estos pasos:
 

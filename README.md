@@ -5,6 +5,11 @@ Redes de Comunicacion
     - Practica 9:
       - Programación de Sockets
 
+## Actividades
+
+- [Actividad 1 - Cliente-Servidor básico con sockets TCP](docs/Actividad_1.md)
+- [Actividad 2 - Servidor con múltiples clientes y menú interactivo](docs/Actividad_2.md)
+
 ## Documentación
 
 La documentación detallada sobre sockets se encuentra en la carpeta `docs/`:
@@ -44,5 +49,5 @@ El servidor se quedará esperando conexiones.
 # En la terminal 3
 ./cliente localhost 9002
 ```
-
 Cada cliente se conectará al servidor y podrás interactuar con el menú de forma independiente. En la terminal del servidor, verás los mensajes que llegan de cada cliente.
+

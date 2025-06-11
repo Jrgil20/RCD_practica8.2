@@ -173,10 +173,22 @@ void procesar_cliente(int sock, struct sockaddr_in *cli_addr) {
                 printf("[%s] Recibiendo lista de %d archivos...\n", client_info, num_archivos);
 
                 for (int i = 0; i < num_archivos; i++) {
+                    // Leer longitud del nombre del archivo (4 bytes en orden de red)
+                    uint32_t len_net;
+                    if (read(sock, &len_net, sizeof(len_net)) <= 0) {
+                        printf("[%s] ERROR: Conexión perdida al leer longitud del nombre del archivo\n", client_info);
+                        break;
+                    }
+                    uint32_t len = ntohl(len_net);
+                    if (len >= sizeof(buffer)) {
+                        printf("[%s] ERROR: Longitud del nombre del archivo excede el buffer\n", client_info);
+                        break;
+                    }
+                    // Leer el nombre del archivo
                     memset(buffer, 0, sizeof(buffer));
-                    n = read(sock, buffer, sizeof(buffer) - 1);
+                    n = read(sock, buffer, len);
                     if (n <= 0) {
-                        printf("[%s] ERROR: Conexión perdida durante recepción de archivos\n", client_info);
+                        printf("[%s] ERROR: Conexión perdida al leer nombre del archivo\n", client_info);
                         break;
                     }
                     buffer[n] = '\0';

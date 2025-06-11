@@ -199,17 +199,31 @@ void escanear_carpeta(int sock) {
 
     // B. Enviar la lista de archivos uno por uno
     for (int i = 0; i < file_count; i++) {
-        if (write(sock, file_list[i], strlen(file_list[i])) < 0) {
-            // Limpiar memoria restante antes de salir
-            for (int j = i; j < file_count; j++) {
+        // Enviar longitud del nombre del archivo (4 bytes en orden de red)
+        uint32_t len = strlen(file_list[i]);
+        uint32_t len_net = htonl(len);
+        if (write(sock, &len_net, sizeof(len_net)) < 0) {
+            // Limpiar memoria antes de salir
+            for (int j = 0; j < file_count; j++) {
                 free(file_list[j]);
             }
             free(file_list);
-            error("ERROR escribiendo nombre de archivo al socket");
+            error("ERROR escribiendo longitud del nombre del archivo");
         }
-        free(file_list[i]); // Liberar memoria
+        // Enviar el nombre del archivo
+        if (write(sock, file_list[i], len) < 0) {
+            // Limpiar memoria antes de salir
+            for (int j = 0; j < file_count; j++) {
+                free(file_list[j]);
+            }
+            free(file_list);
+            error("ERROR escribiendo nombre del archivo");
+        }
     }
-    
-    free(file_list); // Liberar el arreglo
-    printf("Lista de archivos enviada con éxito.\n");
+
+    // C. Liberar memoria
+    for (int i = 0; i < file_count; i++) {
+        free(file_list[i]);
+    }
+    free(file_list);
 }

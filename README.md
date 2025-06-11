@@ -4,6 +4,7 @@ Redes de Comunicacion
  - LABORATORIO
     - Practica 9:
       - Programación de Sockets
+  - Gabriel Castellano y Jesus Gil
 
 ## Actividades
 

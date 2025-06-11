@@ -2,31 +2,41 @@
 
 ## Creación de Sockets
 
-Para crear un socket se necesitan tres argumentos:
-- **Familia**: AF_INET para TCP/IP; AF_UNIX interno
-- **Tipo**: tipo de servicio (SOCK_STREAM para TCP y SOCK_DGRAM para UDP)
-- **Protocolo**: el número de protocolo a usar, típicamente cero para usar el valor por defecto para el tipo y la familia dada
+Para crear un socket se necesitan tres argumentos fundamentales:
+
+| Argumento | Descripción | Valores Comunes |
+|-----------|-------------|----------------|
+| Familia | Define el dominio de comunicación | `AF_INET` (TCP/IP)<br>`AF_UNIX` (interno) |
+| Tipo | Define el tipo de servicio | `SOCK_STREAM` (TCP)<br>`SOCK_DGRAM` (UDP) |
+| Protocolo | Número de protocolo | `0` (valor por defecto) |
 
 ## Constantes Predefinidas
 
-Las constantes agrupan a los símbolos predefinidos para el manejo de sockets. Hay dos grupos principales:
-
 ### Protocol Type (Tipos de Protocolos)
-- **SOCK_STREAM**: Para conexiones TCP
-- **SOCK_DGRAM**: Para conexiones UDP
+
+| Constante | Descripción | Uso Común |
+|-----------|-------------|-----------|
+| `SOCK_STREAM` | Conexión orientada a flujo | TCP |
+| `SOCK_DGRAM` | Conexión orientada a datagramas | UDP |
 
 ### Address Family (Familias de Direcciones)
+
 También conocidas como "protocol families":
-- **AF_INET**: Familia de protocolos internet para todas las comunicaciones TCP/IP incluyendo UDP
-- **AF_UNIX**: Usada cuando las comunicaciones de socket son internas al localhost
-- **PF_INET**: Alternativa a AF_INET (ambas formas son intercambiables)
+
+| Constante | Descripción | Uso |
+|-----------|-------------|-----|
+| `AF_INET` | Familia de protocolos internet | Comunicaciones TCP/IP y UDP |
+| `AF_UNIX` | Familia de protocolos Unix | Comunicaciones internas al localhost |
+| `PF_INET` | Familia de protocolos internet (alternativa) | Intercambiable con `AF_INET` |
 
 ## Ejemplo de Creación de Socket
 
-Una llamada a `socket()` para propósito de abrir una conexión a otro host y comunicarse con TCP sería:
-
 ```c
+// Crear un socket TCP/IP
 mySocket = socket(PF_INET, SOCK_STREAM, 0);
+
+// Crear un socket UDP
+mySocket = socket(PF_INET, SOCK_DGRAM, 0);
 ```
 
-Estas constantes se encuentran en los archivos header "types.h" y "socket.h" del sistema operativo, generalmente ubicados en la ruta "/usr/include". 
+> **Nota**: Estas constantes se encuentran en los archivos header "types.h" y "socket.h" del sistema operativo, generalmente ubicados en la ruta "/usr/include". 

@@ -19,14 +19,18 @@ struct sockaddr_in {
 };
 ```
 
-Donde:
-- `sin_family`: Define el tipo de dirección (2 bytes)
-- `sin_port`: Define el número de puerto de protocolo (2 bytes)
-- `sin_addr`: Define la dirección de red del host remoto (4 bytes)
+### Campos de sockaddr_in
+
+| Campo | Tipo | Tamaño | Descripción |
+|-------|------|--------|-------------|
+| `sin_family` | `__kernel_sa_family_t` | 2 bytes | Tipo de dirección |
+| `sin_port` | `__be16` | 2 bytes | Número de puerto |
+| `sin_addr` | `struct in_addr` | 4 bytes | Dirección IP |
+| `__pad` | `unsigned char[]` | Variable | Relleno para alineación |
 
 ## Estructura hostent
 
-Otra estructura importante se encuentra en el archivo "netdb.h" y se denomina "hostent". Las funciones utilizan la estructura hostent para almacenar información sobre un host determinado, como el nombre del host, la dirección IPv4, entre otra información.
+Otra estructura importante se encuentra en el archivo "netdb.h" y se denomina "hostent". Las funciones utilizan la estructura hostent para almacenar información sobre un host determinado.
 
 ```c
 struct hostent {
@@ -41,4 +45,15 @@ struct hostent {
 };
 ```
 
-Esta estructura es particularmente útil cuando se necesita obtener información sobre un host a partir de su nombre o dirección IP. 
+### Campos de hostent
+
+| Campo | Tipo | Descripción |
+|-------|------|-------------|
+| `h_name` | `char*` | Nombre oficial del host |
+| `h_aliases` | `char**` | Lista de alias del host |
+| `h_addrtype` | `int` | Tipo de dirección del host |
+| `h_length` | `int` | Longitud de la dirección |
+| `h_addr_list` | `char**` | Lista de direcciones del servidor de nombres |
+| `h_addr` | `char*` | Dirección (compatibilidad hacia atrás) |
+
+> **Nota**: Esta estructura es particularmente útil cuando se necesita obtener información sobre un host a partir de su nombre o dirección IP. 
